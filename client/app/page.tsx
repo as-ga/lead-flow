@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
@@ -11,6 +13,9 @@ export default function Home() {
         process and boost your conversion rates. Start managing your leads with
         LeadFlow today!
       </p>
+      <Button variant="outline" className="mt-6 ">
+        Get Started
+      </Button>
     </div>
   );
 }
