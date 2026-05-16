@@ -1,0 +1,20 @@
+{
+  "name": "leadflow-server",
+  "version": "1.0.0",
+  "description": "Server for LeadFlow application",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc && tsc-alias",
+    "start": "node dist/server.js"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "tsc-alias": "^1.8.17",
+    "tsx": "^4.22.0",
+    "typescript": "^6.0.3"
+  },
+  "author": "Ashutosh Gaurav",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1"
+}
