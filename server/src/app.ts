@@ -1,6 +1,5 @@
 import express, { Application } from "express";
 import cors from "cors";
-import env from "./config/env";
 
 const app: Application = express();
 
@@ -15,5 +14,8 @@ app.get("/", (_, res) => {
 app.get("/api/health", (_, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
+
+import Routes from "@/modules/index.routes";
+app.use("/api", Routes);
 
 export default app;
