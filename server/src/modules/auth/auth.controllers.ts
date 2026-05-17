@@ -1,5 +1,4 @@
 import { CookieOptions } from "express";
-import type { Request, Response } from "express";
 import { ApiError, ApiResponse } from "@/utils/apiHandler";
 import { asyncHandler } from "@/utils/asyncHandler";
 import { User } from "@/models/user";
@@ -91,7 +90,7 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 });
 
-const logoutUser = asyncHandler(async (req: Request, res: Response) => {
+const logoutUser = asyncHandler(async (req, res) => {
   // write a steps to logout a user
   // 1. get refresh token from cookies or authorization header
   // 2. verify token and get payload
