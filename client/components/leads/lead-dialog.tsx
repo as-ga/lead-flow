@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -59,19 +59,46 @@ export function LeadDialog({
     setValue,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: isEdit
-      ? {
-          name: lead.name,
-          email: lead.email,
-          status: lead.status,
-          source: lead.source,
-          remarks: lead.remarks,
-        }
-      : {},
+    mode: "onBlur",
+    defaultValues:
+      isEdit && lead
+        ? {
+            name: lead.name ?? "",
+            email: lead.email ?? "",
+            status: lead.status,
+            source: lead.source ?? "",
+            remarks: lead.remarks ?? "",
+          }
+        : {
+            name: "",
+            email: "",
+            source: undefined,
+            remarks: "",
+          },
   });
 
   const statusValue = watch("status");
   const sourceValue = watch("source");
+
+  // Reset form when lead changes or dialog opens
+  useEffect(() => {
+    if (open && isEdit && lead) {
+      reset({
+        name: lead.name ?? "",
+        email: lead.email ?? "",
+        status: lead.status,
+        source: lead.source ?? "",
+        remarks: lead.remarks ?? "",
+      });
+    } else if (open && !isEdit) {
+      reset({
+        name: "",
+        email: "",
+        source: undefined,
+        remarks: "",
+      });
+    }
+  }, [open, lead, isEdit, reset]);
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
@@ -129,27 +156,25 @@ export function LeadDialog({
             )}
           </div>
 
-          {isEdit && (
-            <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
-              <Select
-                value={statusValue || ""}
-                onValueChange={(value) =>
-                  setValue("status", value as Lead["status"])
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="new">New</SelectItem>
-                  <SelectItem value="contacted">Contacted</SelectItem>
-                  <SelectItem value="qualified">Qualified</SelectItem>
-                  <SelectItem value="lost">Lost</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          )}
+          <div className="space-y-2">
+            <Label htmlFor="status">Status</Label>
+            <Select
+              value={statusValue || ""}
+              onValueChange={(value) =>
+                setValue("status", value as Lead["status"])
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="new">New</SelectItem>
+                <SelectItem value="contacted">Contacted</SelectItem>
+                <SelectItem value="qualified">Qualified</SelectItem>
+                <SelectItem value="lost">Lost</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
           <div className="space-y-2">
             <Label htmlFor="source">Source</Label>

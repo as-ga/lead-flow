@@ -127,9 +127,7 @@ class ApiClient {
   }
 
   async updateLead(id: string, payload: UpdateLeadPayload): Promise<Lead> {
-    // Using POST instead of GET for sending data, as the backend route might have issues
-    // But respecting the backend design by calling the /update/:id endpoint
-    const response = await this.client.post(`/lead/update/${id}`, payload);
+    const response = await this.client.put(`/lead/update/${id}`, payload);
     return response.data.data;
   }
 
