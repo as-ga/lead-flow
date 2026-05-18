@@ -37,7 +37,6 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       const response = await apiClient.login(data.email, data.password);
-      console.log("Login response:", response);
       setUser(response.user);
       toast.success("Logged in successfully!");
       router.push("/dashboard");

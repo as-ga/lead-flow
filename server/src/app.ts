@@ -25,18 +25,6 @@ app.get("/api/health", (_, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-app.use((req, _, next) => {
-  console.table({
-    http: {
-      method: req.method,
-      url: req.originalUrl,
-      timestamp: new Date().toISOString(),
-    },
-  });
-  console.log("\n");
-  next();
-});
-
 // Register API routes
 import Routes from "@/modules/index.routes";
 app.use("/api", Routes);

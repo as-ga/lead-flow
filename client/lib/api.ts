@@ -33,7 +33,6 @@ class ApiClient {
             "Access token is required",
             "Invalid or expired access token",
           ];
-          console.log("Axios Error:", error);
           if (status === 401 && message.includes(data.message)) {
             try {
               await this.client.post("/auth/refresh-tokens");

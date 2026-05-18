@@ -92,8 +92,6 @@ const getLeadByID = asyncHandler(async (req, res) => {
     );
   }
 
-  console.log("lead", lead);
-
   if (!lead) throw new ApiError(404, "Lead not found");
 
   return res
