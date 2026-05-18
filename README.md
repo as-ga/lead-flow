@@ -480,6 +480,8 @@ Check out the documentation files or review the codebase. For issues, open a Git
 ---
 
 **Made with ❤️ by Ashutosh Gaurav**
+
+```
 │ ├── app/ # Next.js pages
 │ │ ├── dashboard/ # Main dashboard
 │ │ ├── login/ # Auth pages
@@ -622,4 +624,3 @@ Built with modern technologies for an exceptional developer experience.
 **Start managing your leads efficiently with LeadFlow today!** 🚀
 
 [Setup Guide](./SETUP_GUIDE.md) • [Frontend README](./client/README.md) • [Backend README](./server/README.md)
-```
