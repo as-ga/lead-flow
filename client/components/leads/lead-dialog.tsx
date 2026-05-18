@@ -10,10 +10,16 @@ import {
   type UpdateLeadFormData,
 } from "@/lib/validations";
 import { apiClient } from "@/lib/api";
-import { Lead } from "@/types";
+import type { Lead } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import {
   Dialog,
@@ -50,6 +56,7 @@ export function LeadDialog({
     formState: { errors },
     reset,
     watch,
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: isEdit
@@ -62,6 +69,9 @@ export function LeadDialog({
         }
       : {},
   });
+
+  const statusValue = watch("status");
+  const sourceValue = watch("source");
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
@@ -122,28 +132,41 @@ export function LeadDialog({
           {isEdit && (
             <div className="space-y-2">
               <Label htmlFor="status">Status</Label>
-              <Select id="status" {...register("status")}>
-                <option value="">Select status</option>
-                <option value="new">New</option>
-                <option value="contacted">Contacted</option>
-                <option value="qualified">Qualified</option>
-                <option value="lost">Lost</option>
+              <Select
+                value={statusValue || ""}
+                onValueChange={(value) =>
+                  setValue("status", value as Lead["status"])
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="new">New</SelectItem>
+                  <SelectItem value="contacted">Contacted</SelectItem>
+                  <SelectItem value="qualified">Qualified</SelectItem>
+                  <SelectItem value="lost">Lost</SelectItem>
+                </SelectContent>
               </Select>
-              {/* {errors.status && (
-                <p className="text-sm text-destructive">
-                  {errors.status.message}
-                </p>
-              )} */}
             </div>
           )}
 
           <div className="space-y-2">
             <Label htmlFor="source">Source</Label>
-            <Select id="source" {...register("source")}>
-              <option value="">Select source</option>
-              <option value="website">Website</option>
-              <option value="instagram">Instagram</option>
-              <option value="referral">Referral</option>
+            <Select
+              value={sourceValue || ""}
+              onValueChange={(value) =>
+                setValue("source", value as Lead["source"])
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select source" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="website">Website</SelectItem>
+                <SelectItem value="instagram">Instagram</SelectItem>
+                <SelectItem value="referral">Referral</SelectItem>
+              </SelectContent>
             </Select>
             {errors.source && (
               <p className="text-sm text-destructive">
