@@ -470,6 +470,7 @@ This project is licensed under the MIT License. See [LICENSE](./LICENSE) file fo
 - **Setup Guide**: [SETUP_GUIDE.md](./SETUP_GUIDE.md)
 - **Architecture**: [ARCHITECTURE.md](./ARCHITECTURE.md)
 - **Deployment**: [DEPLOYMENT.md](./DEPLOYMENT.md)
+- **Environment Config**: [ENV_GUIDE.md](./ENV_GUIDE.md)
 
 ---
 
@@ -583,44 +584,14 @@ sort - latest or oldest
 
 ## 🧪 Testing Checklist
 
-- [ ] User registration flow
-- [ ] User login flow
-- [ ] Create new lead
-- [ ] Update lead
-- [ ] Delete lead
-- [ ] Search leads (debounced)
-- [ ] Filter by status
-- [ ] Filter by source
-- [ ] Pagination (previous/next)
-- [ ] CSV export
-- [ ] Logout
-
-## 🤝 Contributing
-
-Contributions welcome! Please:
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing`)
-3. Commit changes (`git commit -m "feat: add amazing feature"`)
-4. Push to branch (`git push origin feature/amazing`)
-5. Open Pull Request
-
-## 📄 License
-
-MIT License - see [LICENSE](./LICENSE) file for details
-
-## 💬 Support & Contact
-
-- **Issues**: GitHub Issues
-- **Email**: support@leadflow.dev
-- **Documentation**: See [SETUP_GUIDE.md](./SETUP_GUIDE.md)
-
-## 🙏 Acknowledgments
-
-Built with modern technologies for an exceptional developer experience.
-
----
-
-**Start managing your leads efficiently with LeadFlow today!** 🚀
-
-[Setup Guide](./SETUP_GUIDE.md) • [Frontend README](./client/README.md) • [Backend README](./server/README.md)
+- [✅] User registration flow
+- [✅] User login flow
+- [✅] Create new lead
+- [✅] Update lead
+- [✅] Delete lead
+- [✅] Search leads (debounced)
+- [✅] Filter by status
+- [✅] Filter by source
+- [✅] Pagination (previous/next)
+- [✅] CSV export
+- [✅] Logout
