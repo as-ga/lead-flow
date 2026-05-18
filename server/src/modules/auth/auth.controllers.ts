@@ -11,7 +11,7 @@ const cookieOptions: CookieOptions = {
   secure: !env.isDev,
   sameSite: "strict",
   domain: env.isDev ? "localhost" : env.clientURL.replace(/^https?:\/\//, ""),
-  maxAge: env.jwtExpires + 10 * 24 * 60 * 60, // set cookie expiry slightly longer than refresh token expiry
+  maxAge: (env.jwtExpires + 10 * 24 * 60 * 60) * 1000, // set cookie expiry slightly longer than refresh token expiry
 };
 const expiredCookieOptions: CookieOptions = { ...cookieOptions, maxAge: 0 };
 
@@ -88,6 +88,49 @@ const loginUser = asyncHandler(async (req, res) => {
         },
       })
     );
+});
+
+const getCurrentUser = asyncHandler(async (req, res) => {
+  // write a steps to get current user
+  // 1. get user id from request (set by auth middleware)
+  // 2. fetch user from database and return response
+
+  const userId = req?.user?._id;
+  if (!userId) throw new ApiError(401, "Unauthorized");
+
+  const user = await User.findById(userId);
+  if (!user) throw new ApiError(404, "User not found");
+
+  return res.status(200).json(
+    new ApiResponse(200, "User fetched successfully", {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    })
+  );
+});
+
+const getUserById = asyncHandler(async (req, res) => {
+  // write a steps to get user by id
+  // 1. get user id from request params
+  // 2. fetch user from database and return response
+
+  const userId = req.params.id;
+
+  const user = await User.findById(userId).select("-password -refreshToken");
+  if (!user) throw new ApiError(404, "User not found");
+
+  return res.status(200).json(
+    new ApiResponse(200, "User fetched successfully", {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    })
+  );
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
@@ -189,4 +232,12 @@ const refreshToken = asyncHandler(async (req, res) => {
     );
 });
 
-export { registerUser, loginUser, logoutUser, logoutAllSessions, refreshToken };
+export {
+  registerUser,
+  loginUser,
+  getCurrentUser,
+  getUserById,
+  logoutUser,
+  logoutAllSessions,
+  refreshToken,
+};
