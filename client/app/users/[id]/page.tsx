@@ -28,7 +28,7 @@ export default function UserById({ params }: Props) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen">
       <nav className="bg-indigo-500 p-4 shadow mb-4 flex items-center justify-between">
         <h1 className="text-lg font-bold">User Details</h1>
 
@@ -54,8 +54,8 @@ export default function UserById({ params }: Props) {
           </p>
         </div>
       </nav>
-      <main className="container mx-auto p-4 grow">
-        <div className="bg-white p-6 rounded shadow mb-6">
+      <main className="container mx-auto p-4 grow shadow-xl rounded ">
+        <div className="p-6 rounded shadow mb-6 bg-accent-foreground/10">
           <h1 className="text-2xl font-bold mb-4">User Details</h1>
           {userData ? (
             <div className="space-y-2">
@@ -72,7 +72,7 @@ export default function UserById({ params }: Props) {
           )}
         </div>
       </main>
-      <footer className="bg-gray-100 p-4 text-center text-sm text-gray-600">
+      <footer className="p-4 text-center text-sm text-gray-600 bg-accent-foreground/20">
         &copy; {new Date().getFullYear()} Lead Management System. All rights
         reserved.
       </footer>
