@@ -84,10 +84,15 @@ const getLeadByID = asyncHandler(async (req, res) => {
   let lead = undefined;
 
   if (user.role === "admin") {
-    lead = await Lead.findById(id);
+    lead = await Lead.findById(id).populate("createdBy", "name email role");
   } else {
-    lead = await Lead.findOne({ _id: id, createdBy: user._id });
+    lead = await Lead.findOne({ _id: id, createdBy: user._id }).populate(
+      "createdBy",
+      "name email role"
+    );
   }
+
+  console.log("lead", lead);
 
   if (!lead) throw new ApiError(404, "Lead not found");
 
@@ -98,39 +103,42 @@ const getLeadByID = asyncHandler(async (req, res) => {
 
 const getLeads = asyncHandler(async (req, res) => {
   // write a steps to get leads with pagination and search
-  // 1. get page, limit and search from query params
-  // 2. create filter object based on search query (search in name, email, phone and company fields)
-  // 3. if user is not admin then add createdBy field to filter with user id from request (set by auth middleware)
-  // 4. get total count of leads based on filter
-  // 5. get leads based on filter with pagination and sorting by createdAt field in descending order
-  // 6. return response with leads and meta data (total, page, limit and pages)
+  // 1. get page and limit from query params with default values
+  // 2. create filter object based on search query param and user role (admin can see all leads, user can see only their leads)
+  // 3. fetch leads from database with filter, pagination and sorting by createdAt in descending order
+  // 4. return response with leads and meta data (total, page, limit, pages)
 
   const user = (req as any).user!;
 
   const page = Math.max(Number(req.query.page) || 1, 1);
   const limit = Math.max(Number(req.query.limit) || 10, 1);
-  const search =
-    typeof req.query.search === "string" ? req.query.search.trim() : "";
 
   const filter: any = {};
 
   if (user.role !== "admin") filter.createdBy = user._id;
+  const allowedFilters = ["search", "status", "source"];
 
-  if (search) {
-    const regex = new RegExp(search, "i");
-    filter.$or = [
-      { name: regex },
-      { email: regex },
-      { phone: regex },
-      { company: regex },
-    ];
-  }
+  allowedFilters.forEach((field) => {
+    const value = req.query[field];
+    if (typeof value === "string" && value.trim() !== "") {
+      if (field === "search") {
+        filter.$or = [
+          { name: new RegExp(value.trim(), "i") },
+          { email: new RegExp(value.trim(), "i") },
+        ];
+      } else {
+        filter[field] = new RegExp(value.trim(), "i");
+      }
+    }
+  });
 
   const total = await Lead.countDocuments(filter);
+
   const leads = await Lead.find(filter)
     .skip((page - 1) * limit)
     .limit(limit)
-    .sort({ createdAt: -1 });
+    .sort({ createdAt: -1 })
+    .populate("createdBy", "name email role");
 
   return res.status(200).json(
     new ApiResponse(200, "Leads fetched successfully", {
