@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { ReactNode, useEffect } from "react";
 import { useAuthStore } from "@/lib/store";
 import { apiClient } from "@/lib/api";
+import { ThemeProvider } from "next-themes";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,9 +24,11 @@ export function Providers({ children }: { children: ReactNode }) {
   }, [user, setUser]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <Toaster position="top-right" />
-    </QueryClientProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <Toaster position="top-right" />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
