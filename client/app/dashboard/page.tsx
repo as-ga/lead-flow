@@ -7,7 +7,13 @@ import { Lead, LeadFilters, LeadSource, LeadStatus } from "@/types";
 import { useDebounce } from "@/lib/helpers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Card,
   CardContent,
@@ -175,29 +181,37 @@ export default function DashboardPage() {
             <div>
               <label className="text-sm font-medium">Status</label>
               <Select
-                value={status ? status : ""}
-                onChange={(e) => setStatus(e.target.value as LeadStatus)}
-                className="mt-2"
+                value={status || ""}
+                onValueChange={(value) => setStatus(value as LeadStatus)}
               >
-                <option value="">All Status</option>
-                <option value="new">New</option>
-                <option value="contacted">Contacted</option>
-                <option value="qualified">Qualified</option>
-                <option value="lost">Lost</option>
+                <SelectTrigger className="mt-2">
+                  <SelectValue placeholder="All Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All Status</SelectItem>
+                  <SelectItem value="new">New</SelectItem>
+                  <SelectItem value="contacted">Contacted</SelectItem>
+                  <SelectItem value="qualified">Qualified</SelectItem>
+                  <SelectItem value="lost">Lost</SelectItem>
+                </SelectContent>
               </Select>
             </div>
 
             <div>
               <label className="text-sm font-medium">Source</label>
               <Select
-                value={source ? source : ""}
-                onChange={(e) => setSource(e.target.value as LeadSource)}
-                className="mt-2"
+                value={source || ""}
+                onValueChange={(value) => setSource(value as LeadSource)}
               >
-                <option value="">All Sources</option>
-                <option value="website">Website</option>
-                <option value="instagram">Instagram</option>
-                <option value="referral">Referral</option>
+                <SelectTrigger className="mt-2">
+                  <SelectValue placeholder="All Sources" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All Sources</SelectItem>
+                  <SelectItem value="website">Website</SelectItem>
+                  <SelectItem value="instagram">Instagram</SelectItem>
+                  <SelectItem value="referral">Referral</SelectItem>
+                </SelectContent>
               </Select>
             </div>
 
@@ -205,11 +219,15 @@ export default function DashboardPage() {
               <label className="text-sm font-medium">Sort</label>
               <Select
                 value={sort}
-                onChange={(e) => setSort(e.target.value as "latest" | "oldest")}
-                className="mt-2"
+                onValueChange={(value) => setSort(value as "latest" | "oldest")}
               >
-                <option value="latest">Latest First</option>
-                <option value="oldest">Oldest First</option>
+                <SelectTrigger className="mt-2">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="latest">Latest First</SelectItem>
+                  <SelectItem value="oldest">Oldest First</SelectItem>
+                </SelectContent>
               </Select>
             </div>
           </div>
