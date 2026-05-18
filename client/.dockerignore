@@ -1,0 +1,15 @@
+!.env
+node_modules
+.next
+.git
+.gitignore
+README.md
+*.log
+.env
+.env.local
+.env.*.local
+.DS_Store
+pnpm-debug.log
+pnpm-lock.yaml
+.vscode
+.idea
