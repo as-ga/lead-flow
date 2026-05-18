@@ -268,6 +268,8 @@ export default function DashboardPage() {
                     {user?.role === "admin" && (
                       <TableHead>Created By</TableHead>
                     )}
+
+                    <TableHead>Remarks</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -285,15 +287,30 @@ export default function DashboardPage() {
                       <TableCell>{formatDateShort(lead.createdAt)}</TableCell>
                       {user?.role === "admin" && (
                         <TableCell>
-                          <Link
-                            href={`/users/${lead.createdBy._id}`}
-                            target="_blank"
-                            className="text-sm text-primary hover:underline"
-                          >
-                            {lead.createdBy.name} ({lead.createdBy.email})
-                          </Link>
+                          {lead.createdBy ? (
+                            <Link
+                              href={`/users/${lead.createdBy._id}`}
+                              target="_blank"
+                              className="text-sm text-primary hover:underline"
+                            >
+                              {lead.createdBy.name} ({lead.createdBy.email})
+                            </Link>
+                          ) : (
+                            <span className="text-muted-foreground">
+                              Unknown
+                            </span>
+                          )}
                         </TableCell>
                       )}
+                      <TableCell>
+                        {lead.remarks ? (
+                          <span className="text-sm">{lead.remarks}</span>
+                        ) : (
+                          <span className="text-sm text-muted-foreground">
+                            No remarks
+                          </span>
+                        )}
+                      </TableCell>
                       <TableCell className="text-right">
                         <div className="flex gap-2 justify-end">
                           <Button
