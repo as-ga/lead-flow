@@ -15,14 +15,13 @@
                 "src/*"
             ]
         },
-        "strict": true,
+        "strict": false,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
-        "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true
+        "declaration": false,
+        "sourceMap": false
     },
     "include": [
         "src/**/*"

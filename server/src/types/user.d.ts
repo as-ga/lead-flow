@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { Document, Types } from "mongoose";
 export interface IUser extends Document {
   _id?: Types.ObjectId;
   name: string;
@@ -8,4 +8,5 @@ export interface IUser extends Document {
   refreshToken: string[];
   createdAt: Date;
   updatedAt: Date;
+  isPasswordCorrect(password: string): Promise<boolean>;
 }
