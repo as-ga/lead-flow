@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useActionState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
 import { Lead, LeadFilters, LeadSource, LeadStatus } from "@/types";
@@ -188,7 +188,6 @@ export default function DashboardPage() {
                   <SelectValue placeholder="All Status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Status</SelectItem>
                   <SelectItem value="new">New</SelectItem>
                   <SelectItem value="contacted">Contacted</SelectItem>
                   <SelectItem value="qualified">Qualified</SelectItem>
@@ -207,7 +206,6 @@ export default function DashboardPage() {
                   <SelectValue placeholder="All Sources" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Sources</SelectItem>
                   <SelectItem value="website">Website</SelectItem>
                   <SelectItem value="instagram">Instagram</SelectItem>
                   <SelectItem value="referral">Referral</SelectItem>

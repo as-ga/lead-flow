@@ -2,6 +2,7 @@
 
 import { useAuthStore } from "@/lib/store";
 import { useAuth } from "@/hooks/useAuth";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 import {
   DropdownMenu,
@@ -90,6 +91,7 @@ export default function DashboardLayout({
         <header className="border-b border-input bg-card px-6 py-4 flex items-center justify-between">
           <h2 className="text-2xl font-bold">Dashboard</h2>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-2 p-2 hover:bg-muted rounded-lg transition">
